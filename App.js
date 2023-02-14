@@ -104,12 +104,16 @@ function StackScreen() {
       <Stack.Screen
         name="Home"
         component={HomeScreen}
-        options={{ title: 'My home' }}
-      />
-      <Stack.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={({ route }) => ({ title: route.params.name })}
+        options={{
+          title: 'My home',
+          headerStyle: {
+            backgroundColor: '#f4511e',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
       />
     </Stack.Navigator>
   );
