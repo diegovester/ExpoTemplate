@@ -73,16 +73,29 @@ function DetailsScreen({ route, navigation }) {
   );
 }
 
+function StackScreen() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ title: 'My home' }}
+      />
+    </Stack.Navigator>
+  );
+}
+
 const Stack = createNativeStackNavigator();
 
 function App() {
   const someData = "some data";
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home">
-          {(props) => <HomeScreen {...props} extraData={someData} />}
+      <Stack.Navigator initialRouteName="StackScreen">
+        <Stack.Screen name="StackScreen">
+          {(props) => <StackScreen {...props} extraData={someData} />}
         </Stack.Screen>
+        <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Details" component={DetailsScreen} />
         <Stack.Screen name="CreatePost" component={CreatePostScreen} />
       </Stack.Navigator>
