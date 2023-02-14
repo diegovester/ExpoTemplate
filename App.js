@@ -90,6 +90,10 @@ function ProfileScreen({ route, navigation }) {
       <Text>profileTitle: {JSON.stringify(profileTitle)}</Text>
       <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
       <Button title="Go back" onPress={() => navigation.goBack()} />
+      <Button
+        title="Update the title"
+        onPress={() => navigation.setOptions({ title: 'Updated!' })}
+      />
     </View>
   );
 }
