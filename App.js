@@ -132,7 +132,20 @@ function App() {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Details" component={DetailsScreen} />
         <Stack.Screen name="CreatePost" component={CreatePostScreen} />
-        <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+        <Stack.Screen 
+          name="ProfileScreen" 
+          component={ProfileScreen} 
+          options={{
+            title: 'My Profile',
+            headerStyle: {
+              backgroundColor: '#e6711e',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
