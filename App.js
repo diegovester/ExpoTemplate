@@ -16,6 +16,13 @@ function HomeScreen({ navigation, route }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Button
+        title="See profile"
+        onPress={() => navigation.navigate('ProfileScreen', {
+            profileName: 'Bob',
+            profileTitle: 'the Tomato',
+          })}
+      />
+      <Button
         title="Create post"
         onPress={() => navigation.navigate('CreatePost')}
       />
@@ -73,6 +80,20 @@ function DetailsScreen({ route, navigation }) {
   );
 }
 
+function ProfileScreen({ route, navigation }) {
+  /* 2. Get the param */
+  const { profileName, profileTitle } = route.params;
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Profile Screen</Text>
+      <Text>profileName: {JSON.stringify(profileName)}</Text>
+      <Text>profileTitle: {JSON.stringify(profileTitle)}</Text>
+      <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
+      <Button title="Go back" onPress={() => navigation.goBack()} />
+    </View>
+  );
+}
+
 function StackScreen() {
   return (
     <Stack.Navigator>
@@ -80,6 +101,11 @@ function StackScreen() {
         name="Home"
         component={HomeScreen}
         options={{ title: 'My home' }}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={({ route }) => ({ title: route.params.name })}
       />
     </Stack.Navigator>
   );
@@ -98,6 +124,7 @@ function App() {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Details" component={DetailsScreen} />
         <Stack.Screen name="CreatePost" component={CreatePostScreen} />
+        <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
