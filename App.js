@@ -98,6 +98,16 @@ function ProfileScreen({ route, navigation }) {
   );
 }
 
+function LogoTitle({ navigation, route }) {
+  const [postText, setPostText] = React.useState('');
+
+  return (
+    <>
+      <Text>LogoTitle Screen</Text>
+    </>
+  );
+}
+
 function StackScreen() {
   return (
     <Stack.Navigator>
@@ -105,14 +115,14 @@ function StackScreen() {
         name="Home"
         component={HomeScreen}
         options={{
-          title: 'My home',
-          headerStyle: {
-            backgroundColor: '#f4511e',
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
+          headerTitle: (props) => <LogoTitle {...props} />,
+          headerRight: () => (
+            <Button
+              onPress={() => alert('This is a button!')}
+              title="Info"
+              color="#fff"
+            />
+          ),
         }}
       />
     </Stack.Navigator>
