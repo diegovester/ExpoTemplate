@@ -5,157 +5,61 @@ import { Button, View, Text, TextInput } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-function HomeScreen({ navigation, route }) {
-  React.useEffect(() => {
-    if (route.params?.post) {
-      // Post updated, do something with `route.params.post`
-      // For example, send the post to the server
-    }
-  }, [route.params?.post]);
 
+const Stack = createNativeStackNavigator();
+const Tab = createNativeStackNavigator();
+
+function Feed() {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Button
-        title="See profile"
-        onPress={() => navigation.navigate('ProfileScreen', {
-            profileName: 'Bob',
-            profileTitle: 'the Tomato',
-          })}
-      />
-      <Button
-        title="Create post"
-        onPress={() => navigation.navigate('CreatePost')}
-      />
-      <Text style={{ margin: 10 }}>Post: {route.params?.post}</Text>
+      <Text>Feed Screen</Text>
     </View>
   );
 }
 
-function CreatePostScreen({ navigation, route }) {
-  const [postText, setPostText] = React.useState('');
-
-  return (
-    <>
-      <TextInput
-        multiline
-        placeholder="What's on your mind?"
-        style={{ height: 200, padding: 10, backgroundColor: 'white' }}
-        value={postText}
-        onChangeText={setPostText}
-      />
-      <Button
-        title="Done"
-        onPress={() => {
-          // Pass and merge params back to home screen
-          navigation.navigate({
-            name: 'Home',
-            params: { post: postText },
-            merge: true,
-          });
-        }}
-      />
-    </>
-  );
-}
-
-function DetailsScreen({ route, navigation }) {
-  /* 2. Get the param */
-  const { itemId, otherParam } = route.params;
+function Messages() {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Details Screen</Text>
-      <Text>itemId: {JSON.stringify(itemId)}</Text>
-      <Text>otherParam: {JSON.stringify(otherParam)}</Text>
-      <Button
-        title="Go to Details... again"
-        onPress={() =>
-          navigation.push('Details', {
-            itemId: Math.floor(Math.random() * 100),
-          })
-        }
-      />
-      <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
-      <Button title="Go back" onPress={() => navigation.goBack()} />
+      <Text>Messages Screen</Text>
     </View>
   );
 }
 
-function ProfileScreen({ route, navigation }) {
-  /* 2. Get the param */
-  const { profileName, profileTitle } = route.params;
+function Home() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Feed" component={Feed} />
+      <Tab.Screen name="Messages" component={Messages} />
+    </Tab.Navigator>
+  );
+}
+
+function Profile() {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Profile Screen</Text>
-      <Text>profileName: {JSON.stringify(profileName)}</Text>
-      <Text>profileTitle: {JSON.stringify(profileTitle)}</Text>
-      <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
-      <Button title="Go back" onPress={() => navigation.goBack()} />
-      <Button
-        title="Update the title"
-        onPress={() => navigation.setOptions({ title: 'Updated!' })}
-      />
+    </View>
+  );
+}
+function Settings() {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Settings Screen</Text>
     </View>
   );
 }
 
-function LogoTitle({ navigation, route }) {
-  const [postText, setPostText] = React.useState('');
-
-  return (
-    <>
-      <Text>LogoTitle Screen</Text>
-    </>
-  );
-}
-
-function StackScreen() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          headerTitle: (props) => <LogoTitle {...props} />,
-          headerRight: () => (
-            <Button
-              onPress={() => alert('This is a button!')}
-              title="Info"
-              color="#fff"
-            />
-          ),
-        }}
-      />
-    </Stack.Navigator>
-  );
-}
-
-const Stack = createNativeStackNavigator();
-
 function App() {
-  const someData = "some data";
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="StackScreen">
-        <Stack.Screen name="StackScreen">
-          {(props) => <StackScreen {...props} extraData={someData} />}
-        </Stack.Screen>
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Details" component={DetailsScreen} />
-        <Stack.Screen name="CreatePost" component={CreatePostScreen} />
-        <Stack.Screen 
-          name="ProfileScreen" 
-          component={ProfileScreen} 
-          options={{
-            title: 'My Profile',
-            headerStyle: {
-              backgroundColor: '#e6711e',
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
-          }}
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{ headerShown: false }}
         />
+        <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="Settings" component={Settings} />
       </Stack.Navigator>
     </NavigationContainer>
   );
