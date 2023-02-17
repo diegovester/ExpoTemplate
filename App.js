@@ -10,10 +10,18 @@ const Stack = createNativeStackNavigator();
 const Tab = createNativeStackNavigator();
 const Drawer = createNativeStackNavigator();
 
-function Feed() {
+function Feed({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Feed Screen</Text>
+      <Button
+        title="Go to Profile"
+        onPress={() => navigation.navigate('Root', {
+          screen: 'Profile',
+          params: { user: 'jane' },
+          })
+        }
+      />
     </View>
   );
 }
@@ -35,10 +43,21 @@ function Home() {
   );
 }
 
-function Profile() {
+function Profile({ route, navigation }) {
+  /* Get the param */
+  const { user } = route.params;
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Profile Screen</Text>
+      <Text>user: {JSON.stringify(user)}</Text>
+      <Button
+        title="Go to Feed"
+        onPress={() =>
+          navigation.navigate('Home', {
+            screen: 'Feed',
+          })
+        }
+      />
     </View>
   );
 }
