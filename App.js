@@ -19,6 +19,7 @@ function Feed({ navigation }) {
         onPress={() => navigation.navigate('Root', {
           screen: 'Profile',
           params: { user: 'jane' },
+          initial: false,
           })
         }
       />
