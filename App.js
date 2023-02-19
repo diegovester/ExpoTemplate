@@ -5,7 +5,7 @@ import { Button, View, Text, TextInput } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-
+const SettingsStack = createNativeStackNavigator();
 const Stack = createNativeStackNavigator();
 const Tab = createNativeStackNavigator();
 const Drawer = createNativeStackNavigator();
@@ -35,7 +35,7 @@ function Messages() {
   );
 }
 
-function Home() {
+function HomeScreen() {
   return (
     <Tab.Navigator>
       <Tab.Screen name="Feed" component={Feed} />
@@ -44,7 +44,15 @@ function Home() {
   );
 }
 
-function Profile({ route, navigation }) {
+function DetailsScreen() {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Details Screen</Text>
+    </View>
+  );
+}
+
+function ProfileScreen({ route, navigation }) {
   /* Get the param */
   const { user } = route.params;
   return (
@@ -62,7 +70,7 @@ function Profile({ route, navigation }) {
     </View>
   );
 }
-function Settings() {
+function SettingsScreen() {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Settings Screen</Text>
@@ -83,14 +91,27 @@ function Root() {
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Root"
-          component={Root}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen name="Feed" component={Feed} />
-      </Stack.Navigator>
+      <Tab.Navigator>
+        <Tab.Screen name="First">
+          {() => (
+            <SettingsStack.Navigator>
+              <SettingsStack.Screen
+                name="Settings"
+                component={SettingsScreen}
+              />
+              <SettingsStack.Screen name="Profile" component={ProfileScreen} />
+            </SettingsStack.Navigator>
+          )}
+        </Tab.Screen>
+        <Tab.Screen name="Second">
+          {() => (
+            <HomeStack.Navigator>
+              <HomeStack.Screen name="Home" component={HomeScreen} />
+              <HomeStack.Screen name="Details" component={DetailsScreen} />
+            </HomeStack.Navigator>
+          )}
+        </Tab.Screen>
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
