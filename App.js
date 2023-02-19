@@ -1,97 +1,74 @@
-// In App.js in a new project
-
 import * as React from 'react';
-import { Button, View, Text, TextInput } from 'react-native';
+import { Button, View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-const SettingsStack = createNativeStackNavigator();
-const Stack = createNativeStackNavigator();
-const Tab = createNativeStackNavigator();
-const Drawer = createNativeStackNavigator();
-
-function Feed({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Feed Screen</Text>
-      <Button
-        title="Go to Profile"
-        onPress={() => navigation.navigate('Root', {
-          screen: 'Profile',
-          params: { user: 'jane' },
-          initial: false,
-          })
-        }
-      />
-    </View>
-  );
-}
-
-function Messages() {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Messages Screen</Text>
-    </View>
-  );
-}
-
-function HomeScreen() {
-  return (
-    <Tab.Navigator>
-      <Tab.Screen name="Feed" component={Feed} />
-      <Tab.Screen name="Messages" component={Messages} />
-    </Tab.Navigator>
-  );
-}
-
-function DetailsScreen() {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Details Screen</Text>
-    </View>
-  );
-}
-
-function ProfileScreen({ route, navigation }) {
-  /* Get the param */
-  const { user } = route.params;
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Profile Screen</Text>
-      <Text>user: {JSON.stringify(user)}</Text>
-      <Button
-        title="Go to Feed"
-        onPress={() =>
-          navigation.navigate('Home', {
-            screen: 'Feed',
-          })
-        }
-      />
-    </View>
-  );
-}
-function SettingsScreen() {
+function SettingsScreen({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Settings Screen</Text>
+      <Button
+        title="Go to Profile"
+        onPress={() => navigation.navigate('Profile')}
+      />
     </View>
   );
 }
 
-function Root() {
+function ProfileScreen({ navigation }) {
+  React.useEffect(
+    () => navigation.addListener('focus', () => alert('Screen was focused')),
+    []
+  );
+
+  React.useEffect(
+    () => navigation.addListener('blur', () => alert('Screen was unfocused')),
+    []
+  );
+
   return (
-    <Drawer.Navigator>
-      <Drawer.Screen name="Home" component={Home} />
-      <Drawer.Screen name="Profile" component={Profile} />
-      <Stack.Screen name="Settings" component={Settings} />
-    </Drawer.Navigator>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Profile Screen</Text>
+      <Button
+        title="Go to Settings"
+        onPress={() => navigation.navigate('Settings')}
+      />
+    </View>
   );
 }
 
-function App() {
+function HomeScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Home Screen</Text>
+      <Button
+        title="Go to Details"
+        onPress={() => navigation.navigate('Details')}
+      />
+    </View>
+  );
+}
+
+function DetailsScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Details Screen</Text>
+      <Button
+        title="Go to Details... again"
+        onPress={() => navigation.push('Details')}
+      />
+    </View>
+  );
+}
+const Tab = createBottomTabNavigator();
+const SettingsStack = createNativeStackNavigator();
+const HomeStack = createNativeStackNavigator();
+
+export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator>
+      <Tab.Navigator screenOptions={{ headerShown: false }}>
         <Tab.Screen name="First">
           {() => (
             <SettingsStack.Navigator>
@@ -115,5 +92,3 @@ function App() {
     </NavigationContainer>
   );
 }
-
-export default App;
