@@ -16,6 +16,7 @@ function SettingsScreen({ navigation }) {
   );
 }
 
+// focus and blur
 function ProfileScreen({ navigation }) {
   React.useEffect(
     () => navigation.addListener('focus', () => alert('Screen was focused')),
