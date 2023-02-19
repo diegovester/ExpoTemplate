@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button, View, Text } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -16,16 +16,17 @@ function SettingsScreen({ navigation }) {
   );
 }
 
-// focus and blur
 function ProfileScreen({ navigation }) {
-  React.useEffect(
-    () => navigation.addListener('focus', () => alert('Screen was focused')),
-    []
-  );
-
-  React.useEffect(
-    () => navigation.addListener('blur', () => alert('Screen was unfocused')),
-    []
+  useFocusEffect(
+    React.useCallback(() => {
+      alert('Screen was focused');
+      // Do something when the screen is focused
+      return () => {
+        alert('Screen was unfocused');
+        // Do something when the screen is unfocused
+        // Useful for cleanup functions
+      };
+    }, [])
   );
 
   return (
